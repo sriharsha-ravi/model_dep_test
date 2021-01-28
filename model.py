@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
+import sklearn
 
 dataset = pd.read_csv('hiring.csv')
 
@@ -32,15 +33,16 @@ y = dataset.iloc[:, -1]
 #Splitting Training and Test Set
 #Since we have a very small dataset, we will train our model with all availabe data.
 
-from sklearn.linear_model import LinearRegression
-regressor = LinearRegression()
+#from sklearn.linear_model import LinearRegression
+regressor = sklearn.linear_model.LinearRegression()
 
 #Fitting model with trainig data
 regressor.fit(X, y)
 
+from sklearn.externals import joblib
 # Saving model to disk
-pickle.dump(regressor, open('model.pkl','wb'))
+joblib.dump(regressor, open('model.pkl','wb'))
 
 # Loading model to compare the results
-model = pickle.load(open('model.pkl','rb'))
+model = joblib.load(open('model.pkl','rb'))
 print(model.predict([[2, 9, 6]]))

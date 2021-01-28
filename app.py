@@ -1,9 +1,10 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
+from sklearn.externals import joblib
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
+model = joblib.load(open('model.pkl', 'rb'))
 
 @app.route('/')
 def home():
@@ -19,7 +20,7 @@ def predict():
     prediction = model.predict(final_features)
 
     output = round(prediction[0], 2)
-
+  
     return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output))
 
 
